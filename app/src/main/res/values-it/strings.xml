@@ -62,6 +62,7 @@
     <string name="show">Show</string>
     <string name="reset">Reset</string>
     <string name="cancel">Cancel</string>
+    <string name="enable_lateral_swipe">Abilita swipe laterale</string>
 
-    
+
 </resources>

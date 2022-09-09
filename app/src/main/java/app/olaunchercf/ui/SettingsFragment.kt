@@ -13,12 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,10 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +41,6 @@ import app.olaunchercf.helper.openAppInfo
 import app.olaunchercf.helper.showToastLong
 import app.olaunchercf.helper.showToastShort
 import app.olaunchercf.listener.DeviceAdmin
-import app.olaunchercf.ui.compose.SettingsComposable
 import app.olaunchercf.ui.compose.SettingsComposable.SettingsAppSelector
 import app.olaunchercf.ui.compose.SettingsComposable.SettingsArea
 import app.olaunchercf.ui.compose.SettingsComposable.SettingsItem
@@ -186,6 +179,14 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                             onChange = onChange,
                             state = remember { mutableStateOf(prefs.extendHomeAppsArea) }
                         ) { prefs.extendHomeAppsArea = !prefs.extendHomeAppsArea }
+                    },
+                    { _, onChange ->
+                        SettingsToggle(
+                            title = stringResource(R.string.enable_lateral_swipe),
+                            onChange = onChange,
+                            state = remember { mutableStateOf(prefs.swipeLeftEnabled
+                            ) }
+                        ) { disableLateralSwipe()}
                     },
                 )
             )
@@ -361,6 +362,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     private fun toggleStatusBar() {
         prefs.showStatusBar = !prefs.showStatusBar
         populateStatusBar()
+    }
+
+    private fun disableLateralSwipe() {
+        toggleSwipeLeft()
+        toggleSwipeRight()
     }
 
     private fun populateStatusBar() {
